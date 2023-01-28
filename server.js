@@ -4,6 +4,7 @@ import dotenv from "dotenv"
 import express from "express"
 import blogRoute from "./src/routes/blogRoute";
 import queryRoute from "./src/routes/queryRoute";
+import userRoute from "./src/routes/userRoute";
 
 
 const app = express();
@@ -21,4 +22,5 @@ app.listen(port ,()=>{
 
 app.use("/api" , blogRoute);
 app.use("/api" , queryRoute)
+app.use("/api", userRoute)
 app.use("/images", express.static("images"))
