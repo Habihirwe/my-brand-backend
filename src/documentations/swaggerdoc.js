@@ -1,4 +1,6 @@
 import blogRouteDocs from "./blog.doc"
+import userRouteDocs from "./user.doc"
+
 
 
 const swaggerDocumentations ={
@@ -38,19 +40,22 @@ const swaggerDocumentations ={
                 name:"Blogs",
                 description:""
             },
-            {
-              name:"Users",
-              description:""
-          },
-          {
-            name:"Queries",
-            description:""
-        },
+        {
+          name:"Users",
+          description:""
+      },
+      {
+        name:"Queries",
+        description:""
+    },
     
 
         ],
         paths:{
-          ...blogRouteDocs
+          ...blogRouteDocs,
+          ...userRouteDocs,
+          
+          
          
 
         }
