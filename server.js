@@ -2,6 +2,7 @@ import dbConn from "./src/database/dBase";
 import cors from "cors"
 import dotenv from "dotenv"
 import express from "express"
+import blogRoute from "./src/routes/blogRoute";
 
 
 const app = express();
@@ -16,3 +17,6 @@ dbConn();
 app.listen(port ,()=>{
     console.log("The server  is listening on erfgsrtg  : " +port)
 })
+
+app.use("/api" , blogRoute);
+app.use("/images", express.static("images"))
