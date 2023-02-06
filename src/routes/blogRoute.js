@@ -1,7 +1,7 @@
 import express, { Router } from "express"
-import blogController from "../Controller/blogController"
-import upload from "../helpers/multer";
-import verifyAdmin from "../middleware/verifyAdmin";
+import blogController from "../Controller/blogController.js"
+import upload from "../helpers/multer.js";
+import verifyAdmin from "../middleware/verifyAdmin.js";
 const blogRoute = express();
 
 blogRoute.post("/createBlog",upload.single("image"),verifyAdmin, blogController.createBlog);

@@ -1,4 +1,4 @@
-import Query from "../Model/queryModel";
+import Query from "../Model/queryModel.js";
 class queryController {
     //create a contact message
         static async createQuery(req, res) {

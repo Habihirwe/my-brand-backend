@@ -1,6 +1,6 @@
 
-import Blog from "../Model/blogModel";
-import blogValidationSChema from "../validations/blogValidation";
+import Blog from "../Model/blogModel.js";
+import blogValidationSChema from "../validations/blogValidation.js";
 
 
 class blogController{

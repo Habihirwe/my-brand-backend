@@ -2,11 +2,11 @@
 import cors from "cors"
 import dotenv from "dotenv"
 import express from "express"
-import blogRoute from "./src/routes/blogRoute";
-import queryRoute from "./src/routes/queryRoute";
-import userRoute from "./src/routes/userRoute";
+import blogRoute from "./src/routes/blogRoute.js";
+import queryRoute from "./src/routes/queryRoute.js";
+import userRoute from "./src/routes/userRoute.js";
 import swaggerDoc from "swagger-ui-express"
-import swaggerDocumentations from "./src/documentations/swaggerdoc";
+import swaggerDocumentations from "./src/documentations/swaggerdoc.js";
 import mongoose from "mongoose";
 
 const app = express();

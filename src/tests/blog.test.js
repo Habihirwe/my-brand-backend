@@ -1,9 +1,10 @@
 
 import mongoose from "mongoose";
 import request from "supertest";
-import app from "../../server";
+import app from "../../server.js";
 
 describe("show all blogs if are available",()=>{
+
     
     it("should return a status of 200 if found",async()=>{
         const response=await request(app).get("/api/getallblogs");
