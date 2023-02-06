@@ -57,7 +57,7 @@ class UserController{
                     status:"fail",
                     "InvalidCredentials":"Invalid email or password"});
             }
-            //create token
+            
             const token = jwt.sign({ id:user._id }, process.env.JWT_SECRET, {
                 expiresIn: "48h",
             });
@@ -78,7 +78,7 @@ class UserController{
 
 
         
-          //get single user
+          
           static async getSingleUser(req, res) {
             try {
     
@@ -105,7 +105,7 @@ class UserController{
           }
 
             
-    //get all users
+    
         static async getAllUsers(req,res) {
             try {
            const users = await User.find();
