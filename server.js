@@ -1,5 +1,5 @@
-import dbConn from "./src/database/dBase";
-import app from "./app";
+
+import app from "./app.js";
 import mongoose from "mongoose";
 
 mongoose.connect(process.env.MONGODB_URL,{

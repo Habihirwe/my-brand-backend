@@ -1,6 +1,6 @@
 import express from "express"
-import queryController from "../Controller/queryController"
-import verifyAdmin from "../middleware/verifyAdmin";
+import queryController from "../Controller/queryController.js"
+import verifyAdmin from "../middleware/verifyAdmin.js";
 const queryRoute =express.Router();
 
 queryRoute.post("/createMessage",queryController.createQuery);

@@ -1,6 +1,6 @@
-import blogRouteDocs from "./blog.doc"
-import queryRouteDocs from "./query.swaggerdoc"
-import userRouteDocs from "./user.doc"
+import blogRouteDocs from "./blog.doc.js"
+import queryRouteDocs from "./query.swaggerdoc.js"
+import userRouteDocs from "./user.doc.js"
 
 
 
