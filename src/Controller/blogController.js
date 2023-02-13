@@ -1,64 +1,41 @@
 
+import cloudinary from "../helpers/cloudinary.js";
 import Blog from "../Model/blogModel.js";
 import blogValidationSChema from "../validations/blogValidation.js";
+
+// import upload from "../helpers/multer.js";
 
 
 class blogController{
     static async createBlog(req,res){
-        try {
-
-          // Blog validation
-          const {error} = blogValidationSChema.validate(req.body);
-
-          if (error)
-              return res.status(400).json({
-                status:"fail",
-                "validationError": error.details[0].message})
-
-            
-            const imageUrl = `http://localhost:5000/images/${req.file.filename}`
-
-            const blog = new Blog({
-                image: imageUrl,
-                title:req.body.title,
-                description:req.body.description,
-               
-               
-            });
-            await blog.save();
-
-            (req, res) => {
-    const { error, value } = validateBlog(req.body);
-  
-    if (!error) {
-      console.log(error);
-      return res.status(400).json({
-        status:"fail",
-        "message": error.details})
+        
+    try{
+      const file = req.files.image
+      const postImageResult = await cloudinary.uploader.upload(file.tempFilePath, {
+        folder: "My_Brand-Images"
+    })
+      const data = Blog({
+          title:req.body.title,
+          description:req.body.description,
+          image:postImageResult.secure_url
+      })
       
-    }
-  
-    res.send("blogs are validated");
-  },
-
-            res.status(201).json({"status":"success", "data": blog});
-
-        } catch (error) {
-            res.status(500).json({
-              staus : "fail",
-              "error": error.message});
-        }
+          const newBlog= await data.save()
+          res.status(201).json(newBlog)
+      }catch (err){
+          res.status(400).json({message:err.message})
+      }
     }
 
     static async updateBlog(req, res) {
           try {
   
-            const imageUrl = `http://localhost:5000/images/${req.file.filename}`
+            const imageUrl =req.body.image
   
             const updatedBlog = await Blog.findByIdAndUpdate(req.params.id,{$set:{
                 image: imageUrl,
                 title: req.body.title,
-              description:req.body.description,
+               description:req.body.description,
             
               
             }},{new:true});

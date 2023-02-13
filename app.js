@@ -8,11 +8,13 @@ import userRoute from "./src/routes/userRoute.js";
 import swaggerDoc from "swagger-ui-express"
 import swaggerDocumentations from "./src/documentations/swaggerdoc.js";
 import mongoose from "mongoose";
+import fileUpload from "express-fileupload";
 
 const app = express();
 
 app.use(cors());
 app.use(express.json());
+app.use(fileUpload({useTempFiles: true}))
 dotenv.config();
 
 app.use("/api" , blogRoute);

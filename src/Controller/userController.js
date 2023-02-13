@@ -1,12 +1,23 @@
 import User from '../Model/userModel.js'
 import bcrypt from 'bcrypt'
 import jwt from 'jsonwebtoken'
+import userValidationSchema from '../validations/userValidation.js'
+import queryValidationSchema from '../validations/queryvalidation.js'
 
 
 
 class UserController{
     //create / register user
     static async createUser(req,res){
+
+        const {error} = userValidationSchema.validate(req.body)
+        if (error)
+            return res.status(400).json({"validationError": error.details[0].message})
+
+        const duplicatedEmail = await User.findOne({email: req.body.email})
+
+        if (duplicatedEmail)
+            return res.status(409).json({"message": `A user with email ${req.body.email} already exist!`})
 
         try{
 
@@ -27,6 +38,7 @@ class UserController{
             await user.save();
             res.status(201).json({
                 status: "success", 
+                "successMessage":"account created successfully",
                 registeredUser: user});
                 console.log("User registered successfully!");
             
