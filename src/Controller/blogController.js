@@ -1,7 +1,7 @@
 
 import cloudinary from "../helpers/cloudinary.js";
 import Blog from "../Model/blogModel.js";
-import blogValidationSChema from "../validations/blogValidation.js";
+import blogValidationSchema from "../validations/blogValidation.js";
 
 // import upload from "../helpers/multer.js";
 
@@ -28,60 +28,43 @@ class blogController{
     }
 
     static async updateBlog(req, res) {
-          try {
+      try {
   
-            const imageUrl =req.body.image
-  
-            const updatedBlog = await Blog.findByIdAndUpdate(req.params.id,{$set:{
-                image: imageUrl,
-                title: req.body.title,
-               description:req.body.description,
-            
-              
-            }},{new:true});
+        const {error} = blogValidationSchema.validate(req.body);
 
-            if(!updatedBlog){
-              res.status(200).json({
-                status:"fail",
-                message: "blog not found"
-              });
-              return;
-            }
-            res.status(200).json({
-              status:"success",
-              data:updatedBlog
-            });
-          } catch (error) {
-            res.status(500).json({ 
-              status:"fail",
-              error: error.message });
-          }
-        }
-
-
-        // get single blog
-
-        static async getSingleBlog(req, res) {
-        try {
-
-          const singleBlog = await Blog.findById(req.params.id)
-          if(!singleBlog)
-          {
-            res.status(404).json({
-              status: "fail",
-              message: "blog not found"
-            })
-            return;
-          }
-          res.status(200).json({
-            status:"success",
-            data: singleBlog
-          });
-        } catch (error) {
-          res.status(500).json({
+      if (error)
+          return res.status(400).json({
             status:"fail",
-             error: error.message });
+            "validationError": error.details[0].message})
+
+        const postImageResult = await cloudinary.uploader.upload(req.files.image.tempFilePath, {
+            folder: "My_Brand-Images"
+        })
+        // const imageUrl = `http://localhost:5000/images/${req.file.filename}`
+
+        const updatedBlog = await Blog.findByIdAndUpdate(req.params.blogId,{$set:{
+          title: req.body.title,
+          description:req.body.description,
+          image: postImageResult.secure_url
+        }},{new:true});
+
+        if(!updatedBlog){
+          res.status(200).json({
+            status:"fail",
+            message: "blog not found"
+          });
+          return;
         }
+        res.status(200).json({
+          status:"success",
+          "successMessage": "Post updated successfully!",
+          data:updatedBlog
+        });
+      } catch (error) {
+        res.status(500).json({ 
+          status:"fail",
+          error: error.message });
+      }
       }
 
       //get all blogs
@@ -127,7 +110,30 @@ class blogController{
         }
       }
 
-    
+      static async getSingleBlog(req, res) {
+        try {
+
+          const singleBlog = await Blog.findById(req.params.blogId).populate("createdBy") 
+
+          if(!singleBlog)
+          {
+            res.status(404).json({
+              status: "fail",
+              message: "blog not found"
+            })
+            return;
+          }
+          res.status(200).json({
+            status:"success",
+            data: singleBlog
+          });
+        } catch (error) {
+          res.status(500).json({
+            status:"fail",
+             error: error.message });
+        }
+      }
     
 }
+
 export default blogController
