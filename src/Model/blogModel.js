@@ -11,15 +11,15 @@ const blogSchema = mongoose.Schema({
     description : {
       type: String,
     
-    },
-    likes: { 
-      type: Number, 
-      default: 0, 
-      required: false 
-    },
+    }
+    // likes: { 
+    //   type: Number, 
+    //   default: 0, 
+    //   required: false 
+    // },
   
     
-  });
+  }, {timestamps: true});
   
   const Blog = mongoose.model("Blog", blogSchema);
   export default Blog

@@ -1,27 +1,23 @@
 import mongoose from "mongoose";
-const querySchema=mongoose.Schema({
-    firstName:{
-        type:String,
-        
-    },
-    lastName:{
-        type:String,
-        
-    },
-    email:{
-        type:String,
-       
-    },
-    telephone:{
-        type:String,
-       
-    },
-    
-    message: {
-        type:String,
-       
-    }
+const querySchema = mongoose.Schema({
+  firstName: {
+    type: String,
+    required: true,
+  },
+  lastName: {
+    type: String,
+    required: true,
+  },
+  email: {
+    type: String,
+    required: true,
+  },
+
+  message: {
+    type: String,
+    required: true,
+  },
 });
 
-const Query=mongoose.model('Query',querySchema);
-export default Query
+const Query = mongoose.model("Query", querySchema);
+export default Query;

@@ -2,12 +2,13 @@ import express, { Router } from "express"
 import blogController from "../Controller/blogController.js"
 import upload from "../helpers/multer.js";
 import verifyAdmin from "../middleware/verifyAdmin.js";
+import authLogin from "../middleware/authentication.js";
 const blogRoute = express();
 
-blogRoute.post("/createBlog",upload.single("image"),verifyAdmin, blogController.createBlog);
+blogRoute.post("/createBlog",authLogin, blogController.createBlog);
 
 
-blogRoute.put("/updatePost/:id",upload.single("image"),verifyAdmin, blogController.updateBlog); //update existing blog
+blogRoute.put("/updatePost/:id",authLogin, blogController.updateBlog); //update existing blog
 
 blogRoute.get("/getSingleBlog/:id",blogController.getSingleBlog); //get single blog
 
